@@ -1,0 +1,37 @@
+# Node.js dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+supabaseConfig.json
+
+# Uploaded files
+uploads/
+tmp/
+
+# Build & Production files
+dist/
+build/
+.cache/
+
+# Docker & PM2 files
+docker-compose.override.yml
+pm2-log.log
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.bak
