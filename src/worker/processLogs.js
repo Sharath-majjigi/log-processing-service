@@ -4,9 +4,7 @@ import path from 'path';
 import { Queue } from 'bullmq';
 import { redisClient } from '../services/redisClient.js';
 import { supabase } from '../services/supabaseClient.js';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { QUEUE_NAME } from '../config/env.js';
 
 /**
  * Processes a log file and splits it into chunks for concurrent processing.
@@ -23,7 +21,7 @@ export async function processLogs(fileId, filePath) {
         return;
       }
   
-      const queue = new Queue(process.env.QUEUE_NAME, { connection: redisClient });
+      const queue = new Queue(QUEUE_NAME, { connection: redisClient });
       const chunkSize = 1000;
       let currentChunk = [];
       let chunkCount = 0;

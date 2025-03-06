@@ -1,10 +1,8 @@
 import { Queue } from 'bullmq';
 import { redisClient } from '../services/redisClient.js';
-import dotenv from 'dotenv';
+import { QUEUE_NAME } from '../config/env.js'
 
-dotenv.config();
-
-export const logProcessingQueue = new Queue(process.env.QUEUE_NAME, {
+export const logProcessingQueue = new Queue(QUEUE_NAME, {
   connection: redisClient,
   defaultJobOptions: {
     attempts: 3,

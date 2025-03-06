@@ -1,14 +1,12 @@
 import bullmq from 'bullmq';
 import express from 'express';
 import { redisClient } from '../../services/redisClient.js';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import {QUEUE_NAME} from '../../config/env.js'
 
 const { Queue } = bullmq;
 
 const router = express.Router();
-const logQueue = new Queue(process.env.QUEUE_NAME, { connection: redisClient });
+const logQueue = new Queue(QUEUE_NAME, { connection: redisClient });
 
 router.get('/', async (req, res) => {
   try {
