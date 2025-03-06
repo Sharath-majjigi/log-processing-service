@@ -1,4 +1,4 @@
-# Real-Time File Processing Microservice
+# Real-Time LogFile Processing Microservice
 
 ## Overview
 
