@@ -1,13 +1,12 @@
 version: '3.8'
 
 services:
-  # Backend container (Next.js API routes)
   backend:
     build:
       context: .
-      dockerfile: Dockerfile  # Uses a separate Dockerfile for the backend
+      dockerfile: Dockerfile  
     ports:
-      - "3000:3000"  # Backend API exposed on port 4000
+      - "5001:5001" 
     environment:
       - NODE_ENV=production
       - REDIS_URL=redis://redis:6379
@@ -16,7 +15,7 @@ services:
     networks:
       - app-network
     depends_on:
-      - redis  # Ensure Redis is up before backend starts
+      - redis  
 
   # Redis container for BullMQ
   redis:
@@ -34,8 +33,8 @@ services:
   worker:
     build:
       context: .
-      dockerfile: Dockerfile  # Reusing the backend Dockerfile for the worker
-    command: ["node", "src/worker/worker.js"]  # Running the worker script
+      dockerfile: Dockerfile 
+    command: ["node", "src/worker/worker.js"]
     environment:
       - NODE_ENV=production
       - REDIS_URL=redis://redis:6379

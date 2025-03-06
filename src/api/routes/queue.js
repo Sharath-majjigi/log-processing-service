@@ -1,11 +1,14 @@
-import pkg from 'bullmq';
+import bullmq from 'bullmq';
 import express from 'express';
 import { redisClient } from '../../services/redisClient.js';
+import dotenv from 'dotenv';
 
-const { Queue } = pkg; // Import BullMQ correctly
+dotenv.config();
+
+const { Queue } = bullmq;
 
 const router = express.Router();
-const logQueue = new Queue('log-processing-queue', { connection: redisClient });
+const logQueue = new Queue(process.env.QUEUE_NAME, { connection: redisClient });
 
 router.get('/', async (req, res) => {
   try {
@@ -15,7 +18,7 @@ router.get('/', async (req, res) => {
 
     res.json({ activeJobs: active, waitingJobs: waiting, failedJobs: failed });
   } catch (err) {
-    console.error('❌ Error fetching queue status:', err.message);
+    console.error('Error fetching queue status:', err.message);
     res.status(500).json({ error: 'Failed to fetch queue status' });
   }
 });

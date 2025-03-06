@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
+import { SUPABASE_URL, SUPABASE_KEY } from '../config/env.js';
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 /**
  * Verifies the JWT token and returns the decoded user data.

@@ -1,34 +1,11 @@
-// import express from 'express';
-// import multer from 'multer';
-// import path from 'path';
-// import { logProcessingQueue } from '../../queue/logQueue.js';
-
-// const router = express.Router();
-// const upload = multer({ dest: 'uploads/' });
-
-// router.post('/', upload.single('file'), async (req, res) => {
-//     const file = req.file;
-//     if (!file) return res.status(400).json({ error: 'No file uploaded' });
-
-//     const absoluteFilePath = path.resolve(file.path); // ✅ Ensure absolute path
-
-//     const job = await logProcessingQueue.add('processLogFile', {
-//         fileId: Date.now().toString(),
-//         filePath: absoluteFilePath,
-//     });
-
-//     res.json({ message: 'File uploaded', jobId: job.data.fileId });
-// });
-
-// export default router;
-
 import express from 'express';
 import multer from 'multer';
-import { supabase } from '../../services/supabaseClient.js'; // Ensure you have this configured
+import { supabase } from '../../services/supabaseClient.js';
 import { logProcessingQueue } from '../../queue/logQueue.js';
+import { SUPABASE_URL, JOB_NAME, SUPABASE_STORAGE_NAME } from '../../config/env.js';
 
 const router = express.Router();
-const upload = multer(); // No destination since we are uploading directly to Supabase
+const upload = multer(); 
 
 router.post('/', upload.single('file'), async (req, res) => {
     const file = req.file;
@@ -36,10 +13,10 @@ router.post('/', upload.single('file'), async (req, res) => {
 
     // Upload the file to Supabase Storage
     const { data, error: uploadError } = await supabase.storage
-        .from('log-files') // Replace with your bucket name
+        .from(SUPABASE_STORAGE_NAME) 
         .upload(`uploads/${file.originalname}`, file.buffer, {
             contentType: file.mimetype,
-            upsert: true // Set to true if you want to overwrite existing files
+            upsert: true 
         });
 
         console.log('Upload data:', data);
@@ -48,19 +25,19 @@ router.post('/', upload.single('file'), async (req, res) => {
         return res.status(500).json({ error: 'Error uploading file to Supabase', details: uploadError.message });
     }
 
-   const publicURL = `${process.env.SUPABASE_URL}/storage/v1/object/public/log-files/uploads/${file.originalname}`;
+   const publicURL = `${SUPABASE_URL}/storage/v1/object/public/${SUPABASE_STORAGE_NAME}/uploads/${file.originalname}`;
 
 
     // Log the job data before adding it to the queue
     console.log('Adding job to queue:', {
         fileId: Date.now().toString(),
-        filePath: publicURL, // Ensure this is set correctly
+        filePath: publicURL, 
     });
 
     // Add job to the processing queue
-    const job = await logProcessingQueue.add('processLogFile', {
+    const job = await logProcessingQueue.add(JOB_NAME, {
         fileId: Date.now().toString(),
-        filePath: publicURL, // Use the public URL for processing
+        filePath: publicURL, 
     });
 
     res.json({ message: 'File uploaded', jobId: job.data.fileId, fileUrl: publicURL });
