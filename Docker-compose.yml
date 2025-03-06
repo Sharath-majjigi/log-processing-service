@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001" 
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - NO_OF_WORKERS=${NO_OF_WORKERS}
+      - PORT=${PORT}
+      - QUEUE_NAME=${QUEUE_NAME}
+      - REDIS_EVENT=${REDIS_EVENT}
+      - JOB_NAME=${JOB_NAME}
+      - SUPABASE_STORAGE_NAME=${SUPABASE_STORAGE_NAME}
+    networks:
+      - app-network
+    depends_on:
+      - redis  
+
+  # Redis container for BullMQ
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+    volumes:
+      - redis-data:/data  
+
+  # Worker container to process BullMQ jobs
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["node", "src/worker/worker.js"]
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - NO_OF_WORKERS=${NO_OF_WORKERS}
+      - PORT=${PORT}
+      - QUEUE_NAME=${QUEUE_NAME}
+      - REDIS_EVENT=${REDIS_EVENT}
+      - JOB_NAME=${JOB_NAME}
+      - SUPABASE_STORAGE_NAME=${SUPABASE_STORAGE_NAME}
+    depends_on:
+      - redis  
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+    driver: local
