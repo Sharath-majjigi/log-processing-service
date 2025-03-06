@@ -9,7 +9,6 @@ It has 2 versions:
 - v2 : Improved performance, JWT auth, containerization of application. (feat/log-processor-v2)
 
 ## Features of v2
- **Log File Upload**   <br>
  **Asynchronous Workers to process log files with streams**  <br>
  **BullMq Job Management**   <br>
  **Real-Time Updates using websockets** <br>
