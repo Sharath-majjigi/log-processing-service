@@ -1,9 +1,6 @@
 import cluster from 'cluster';
 import os from 'os';
 import {worker}  from './worker.js'; 
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const numCPUs = os.cpus().length;
 

@@ -4,7 +4,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile  
+      dockerfile: Dockerfile
     ports:
       - "5001:5001" 
     environment:
@@ -12,6 +12,12 @@ services:
       - REDIS_URL=redis://redis:6379
       - SUPABASE_URL=${SUPABASE_URL}
       - SUPABASE_KEY=${SUPABASE_KEY}
+      - NO_OF_WORKERS=${NO_OF_WORKERS}
+      - PORT=${PORT}
+      - QUEUE_NAME=${QUEUE_NAME}
+      - REDIS_EVENT=${REDIS_EVENT}
+      - JOB_NAME=${JOB_NAME}
+      - SUPABASE_STORAGE_NAME=${SUPABASE_STORAGE_NAME}
     networks:
       - app-network
     depends_on:
@@ -33,13 +39,19 @@ services:
   worker:
     build:
       context: .
-      dockerfile: Dockerfile 
+      dockerfile: Dockerfile
     command: ["node", "src/worker/worker.js"]
     environment:
       - NODE_ENV=production
       - REDIS_URL=redis://redis:6379
       - SUPABASE_URL=${SUPABASE_URL}
       - SUPABASE_KEY=${SUPABASE_KEY}
+      - NO_OF_WORKERS=${NO_OF_WORKERS}
+      - PORT=${PORT}
+      - QUEUE_NAME=${QUEUE_NAME}
+      - REDIS_EVENT=${REDIS_EVENT}
+      - JOB_NAME=${JOB_NAME}
+      - SUPABASE_STORAGE_NAME=${SUPABASE_STORAGE_NAME}
     depends_on:
       - redis  
     networks:
