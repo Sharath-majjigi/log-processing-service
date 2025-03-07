@@ -30,10 +30,13 @@ Welcome to the Real-Time LogFile Processing Microservice! This application is de
 
 ## 🎥 Demo Video & explaination
 
- [Part-1](https://www.loom.com/share/601d14fe2f7142b088d9b043e4bf07dc?sid=029b9e9b-1caf-4991-b57e-5d3176077932). <br> <br>
- [Part-2](https://www.loom.com/share/0a9e1db75fae464cbf1d2e0477ea7889?sid=59ad94b5-1f97-4457-8839-00e9d622e9b6). <br> <br>
- [Part-3](https://www.loom.com/share/6c370c2e60d14a48a61aab67abb4dd18?sid=214370fb-ecbf-4e2a-a224-96d60cd9ddd1). <br> <br>
+ [Part-1](https://www.loom.com/share/601d14fe2f7142b088d9b043e4bf07dc?sid=029b9e9b-1caf-4991-b57e-5d3176077932) <br> <br>
+ [Part-2](https://www.loom.com/share/0a9e1db75fae464cbf1d2e0477ea7889?sid=59ad94b5-1f97-4457-8839-00e9d622e9b6) <br> <br>
+ [Part-3](https://www.loom.com/share/6c370c2e60d14a48a61aab67abb4dd18?sid=214370fb-ecbf-4e2a-a224-96d60cd9ddd1) <br> <br>
 ---
+
+## Code walkthrough
+**[Video](https://www.loom.com/share/7df1ed964bf74469b42f394d4b5f7da2?sid=69616172-d75f-4ddf-bf5b-b40a81456a43)**
 
 ## Features
 
