@@ -19,9 +19,7 @@
 
 ---
 
-## Overview
-
-This application is designed to handle large-scale log file processing with efficiency and provide real-time analytics through a modern, scalable architecture. <br> 
+## NOTE
 If you are signing up first time, you get a confirmation email make sure to click on that then you can login.
 
 ### Versions
